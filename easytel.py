@@ -8,7 +8,7 @@
 #  (at your option) any later version.
  
 
-from telnetcontroller import TelnetController
+from telnetcontroller import TelnetController, ConnectionFailed
 import argparse
 
 if __name__ == "__main__":

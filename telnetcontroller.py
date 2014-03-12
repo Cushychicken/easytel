@@ -16,6 +16,20 @@
 
 import telnetlib
 
+class ConnectionFailed(Exception):
+	"""
+		Unable to connect to target host exception
+	"""
+	
+	def __init__(self, message, errors):
+		"""
+			Class constructor
+		"""
+		
+		Exception.__init__(self, message)
+			self.errors = errors
+			
+
 class TelnetController:
         
     """Connect to remote host with TELNET and issue commands.
@@ -47,14 +61,17 @@ class TelnetController:
         """Connect to a remote host and login.
             
         """
-        self.tn = telnetlib.Telnet(self.host_name)      
-        self.tn.read_until('login: ')
-        self.tn.write(self.user_name + '\n')
-        if self.password:
-            self.tn.read_until('assword: ')
-            self.tn.write(self.password + '\n')
-        self.tn.read_until(self.prompt)    
-        return self
+		try:
+			self.tn = telnetlib.Telnet(self.host_name)      
+			self.tn.read_until('login: ')
+			self.tn.write(self.user_name + '\n')
+			if self.password:
+				self.tn.read_until('assword: ')
+				self.tn.write(self.password + '\n')
+			self.tn.read_until(self.prompt)    
+			return self
+		except Exception as e:
+			raise ConnectionError('Could not establish connection at "%s".' % self.host_name, None)
                 
         
     def run_command(self, command):
