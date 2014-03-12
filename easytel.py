@@ -5,37 +5,37 @@ import argparse
 import getpass
 
 class Easytel:
-	def __init__(self, host, login, password, expect):
-		"""
-			Class constructor
+    def __init__(self, host, login, password, expect):
+        """
+            Class constructor
 			
-			*host = name/IP of target machine
-			*login = login ID of target machine
-			*password = password for login ID of target machine
-			*expect = prompt character for telnetlib class to expect
-		"""
-		self.telnet = TelnetController(host, login, password, expect)
-		self.telnet.login()
+            *host = name/IP of target machine
+            *login = login ID of target machine
+            *password = password for login ID of target machine
+            *expect = prompt character for telnetlib class to expect
+        """
+        self.telnet = TelnetController(host, login, password, expect)
+        self.telnet.login()
 		
-	def talk(self, command):
-		"""
-			Function that relays commands to telnet machine. 
+    def talk(self, command):
+        """
+            Function that relays commands to telnet machine. 
 			
-			*command = string or list of strings of commands for host machine to run
+            *command = string or list of strings of commands for host machine to run
 			
-			Returns list of tuples where 
-				* t[0] = command run
-				* t[1] = console output from command
-		"""
-		if type(command) is not list: command = [ command ]
+            Returns list of tuples where 
+                * t[0] = command run
+                * t[1] = console output from command
+        """
+        if type(command) is not list: command = [ command ]
 		
-		history = []
-		for cmd in command:
-			history.append((cmd, self.telnet.run_command(cmd)))
-		return history
+        history = []
+        for cmd in command:
+            history.append((cmd, self.telnet.run_command(cmd)))
+        return history
 		
-	def hangup(self):
-		self.telnet.logout()
+    def hangup(self):
+        self.telnet.logout()
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='A handier method of handling telnet sessions in Python.')
