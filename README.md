@@ -14,7 +14,8 @@ result = ez.talk([ 'date', 'ls -al'])   # takes list of strings as input
 
 ### In Shell
 ```shell
-python easytel.py 192.168.1.1 home $ # Will be prompted for a password if not entered in the shell
+# Will be prompted for a password if not entered in the shell
+python easytel.py 192.168.1.1 home $ 
 ```
 
 Inspired by and derived from Corey Goldberg's [TelnetController.py script](http://goldb.org/telnetpython.html) 
