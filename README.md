@@ -10,6 +10,10 @@ ez = Easytel(HOST, LOGIN, PSWD, EXPECT) # takes host name, login ID, password, a
 result = ez.talk([ 'date', 'ls -al'])   # takes list of strings as input
                                         # returns tuple of (command, command_output)
 
+for r in result:
+    print r[0] # This was the command run
+    print r[1] # This was the output of the command. 
+
 ```
 
 ### In Shell
