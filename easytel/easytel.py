@@ -8,7 +8,7 @@ class Easytel:
     def __init__(self, host, login, password, expect):
         """
             Class constructor
-			
+            
             *host = name/IP of target machine
             *login = login ID of target machine
             *password = password for login ID of target machine
@@ -16,24 +16,24 @@ class Easytel:
         """
         self.telnet = TelnetController(host, login, password, expect)
         self.telnet.login()
-		
+        
     def talk(self, command):
         """
             Function that relays commands to telnet machine. 
-			
+            
             *command = string or list of strings of commands for host machine to run
-			
+            
             Returns list of tuples where 
                 * t[0] = command run
                 * t[1] = console output from command
         """
         if type(command) is not list: command = [ command ]
-		
+        
         history = []
         for cmd in command:
             history.append((cmd, self.telnet.run_command(cmd)))
         return history
-		
+        
     def hangup(self):
         self.telnet.logout()
 
@@ -45,16 +45,17 @@ if __name__ == "__main__":
                         help="login ID to target host")
     parser.add_argument("-p", "--password", dest='password',
                         help="host machine password; omit for prompt")
-    parser.add_argument("-x", "--expect", type=str, default="$", dest='expect'
+    parser.add_argument("-x", "--expect", type=str, default="$", dest='expect',
                         help="expected prompt character (default is '$')")
     parser.add_argument("cmd", type=str,
                         help="command to run inside telnet unit")
-	
-						
+    
+                        
     args = parser.parse_args()
     if args.password is None:
         args.password = getpass.getpass('Enter password for %s@%s:' % (args.login, args.host))
 
     tn = Easytel(args.host, args.login, args.password, args.expect)
-	print tn.talk(args.cmd)[1]
-	tn.hangup()
+    result = tn.talk(args.cmd)
+    print result[0][1]
+    tn.hangup()
