@@ -6,5 +6,5 @@ setup(name='easytel',
       author='Nash Reilly',
       author_email='nrc.reilly@gmail.com',
       url='https://github.com/Cushychicken/easytel',
-      py_modules=['easytel'],
+      packages=['easytel']
       )
